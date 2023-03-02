@@ -22,11 +22,7 @@ import com.alibaba.csp.sentinel.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -57,7 +53,7 @@ public class InMemoryMetricsRepository implements MetricsRepository<MetricEntity
         metricsRepo.save(entity);
         // delete old data before 180 days
         long time = TimeUtil.currentTimeMillis() - 180L * 24 * 60 * 60 * 1000;
-        metricsRepo.deleteByTimestampBefore(time);
+        metricsRepo.deleteByTimestampBefore(new Date(time));
         metricsRepo.flush();
     }
 
@@ -75,7 +71,7 @@ public class InMemoryMetricsRepository implements MetricsRepository<MetricEntity
         if (StringUtil.isBlank(app) || StringUtil.isBlank(resource)) {
             return new ArrayList<>();
         }
-        return metricsRepo.findByAppAndResourceAndTimestampBetween(app, resource, startTime, endTime);
+        return metricsRepo.findByAppAndResourceAndTimestampBetween(app, resource, new Date(startTime), new Date(endTime));
     }
 
     @Override
