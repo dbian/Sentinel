@@ -15,12 +15,17 @@
  */
 package com.alibaba.csp.sentinel.dashboard.datasource.entity;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * @author leyou
  */
+@Entity
 public class MetricEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
     private Long id;
     private Date gmtCreate;
     private Date gmtModified;
