@@ -74,6 +74,7 @@ public class InMemoryMetricsRepositoryTest {
         entry.setBlockQps(0L);
         entry.setSuccessQps(1L);
         inMemoryMetricsRepository.save(entry);
+        
         List<String> resources = inMemoryMetricsRepository.listResourcesOfApp("testSave");
         Assert.assertTrue(resources.size() == 1 && "testResource".equals(resources.get(0)));
     }
